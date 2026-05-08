@@ -1,0 +1,45 @@
+task1_v1: returns 5. Should not be an INT and should be between 0-1.
+python task1_v1/predict.py --flair /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task1v1cls.txt
+cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task1_v1 && apptainer build --fakeroot /containers/task1_v1.sif Apptainer.def 
+
+task2_v1: no cuda
+python task2_v1/predict.py --flair /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task2v1seg.nii.gz
+cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task2_v1 && apptainer build --fakeroot /containers/task2_v1.sif Apptainer.def 
+
+task2_v2: incorrect output shape
+python task2_v2/predict.py --flair /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task2v2seg.nii.gz
+cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task2_v2 && apptainer build --fakeroot /containers/task2_v2.sif Apptainer.def 
+
+task2_v3: incorrect build platform (should have used -arch amd64)
+python task2_v3/predict.py --flair /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task2v3seg.nii.gz
+cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task2_v3 && apptainer build --fakeroot /containers/task2_v3.sif Apptainer.def 
+
+task2_v4: SHOULD WORK
+python task2_v4/predict.py --flair /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task2v4seg.nii.gz
+cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task2_v4 && apptainer build --fakeroot /containers/task2_v4.sif Apptainer.def 
+
+task3_v1: output is a list[str] rather than just str
+python task3_v1/predict.py --t1 /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task3reg.txt 
+cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task3_v1 && apptainer build --fakeroot /containers/task3_v1.sif Apptainer.def 
+
+task4_v1: unexpected labels. Should be 0,1,2 but is 0,1,2,3,4
+python task4_v1/predict.py --t2w /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task4seg.nii.gz
+cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task4_v1 && apptainer build --fakeroot /containers/task4_v1.sif Apptainer.def 
+
+task5_v1: multiple values
+python task5_v1/predict.py --t1w /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task5cls.txt
+cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task5_v1 && apptainer build --fakeroot /containers/task5_v1.sif Apptainer.def 
+
+task6_v1: inf/nan in embedding
+python task6_v1/predict.py --input /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task6v1emb.npy
+cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task6_v1 && apptainer build --fakeroot /containers/task6_v1.sif Apptainer.def 
+
+task6_v2: missing dependency
+python task6_v2/predict.py --input /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task6v2emb.npy
+cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task6_v2 && apptainer build --fakeroot /containers/task6_v2.sif Apptainer.def 
+
+task7_v1: assert triggered 
+python task7_v1/predict.py --input /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task7v1emb.npy
+cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task7_v1 && apptainer build --fakeroot /containers/task7_v1.sif Apptainer.def 
+
+upload project instead of file
