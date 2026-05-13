@@ -2,7 +2,7 @@ Bootstrap: docker
 
 # Use any docker image as a base (see https://hub.docker.com/)
 # If using GPU, consider using a CUDA-enabled base image
-From: python:3.11-slim
+From: pytorch/pytorch:2.11.0-cuda12.6-cudnn9-runtime
 
 %labels
     Author FOMO26 Challenge - Classification Task
@@ -14,7 +14,6 @@ From: python:3.11-slim
     export LC_ALL=C.UTF-8
 
 %files
-    # Copy your files (model, predict.py, requirements.txt, ...) to the container
     ./predict.py /app/predict.py
     ./requirements.txt /app/requirements.txt
 
@@ -23,8 +22,8 @@ From: python:3.11-slim
     mkdir -p /input /output /app
 
     # Install Python dependencies (manylinux wheels available, no compiler needed)
-    pip install --no-cache-dir -U pip
-    pip install --no-cache-dir -r /app/requirements.txt
+    pip install --no-cache-dir -U pip --break-system-packages
+    pip install --no-cache-dir -r /app/requirements.txt --break-system-packages
 
     # Make predict.py executable
     chmod +x /app/predict.py

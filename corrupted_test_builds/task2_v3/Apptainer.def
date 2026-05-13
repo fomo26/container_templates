@@ -2,7 +2,7 @@ Bootstrap: docker
 
 # Use any docker image as a base (see https://hub.docker.com/)
 # If using GPU, consider using a CUDA-enabled base image
-From: 2.11.0-cuda12.6-cudnn9-runtime
+From: pytorch/pytorch:2.11.0-cuda12.6-cudnn9-runtime
 
 %labels
     Author FOMO26 Challenge - Meningioma Segmentation Task
@@ -23,8 +23,8 @@ From: 2.11.0-cuda12.6-cudnn9-runtime
     mkdir -p /input /output /app
 
     # Install Python dependencies (manylinux wheels available, no compiler needed)
-    pip install --no-cache-dir -U pip
-    pip install --no-cache-dir -r /app/requirements.txt
+    pip install --no-cache-dir -U pip --break-system-packages
+    pip install --no-cache-dir -r /app/requirements.txt --break-system-packages
 
     # Make predict.py executable
     chmod +x /app/predict.py
