@@ -44,7 +44,7 @@ def predict(args):
     #
     #########################################################################
 
-    embeddings = np.zeros((N_TOKENS, EMBEDDING_DIM), dtype=np.float32)
+    embeddings = np.zeros(EMBEDDING_DIM, dtype=np.float32)
     return embeddings
 
 

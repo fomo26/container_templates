@@ -42,4 +42,8 @@ task7_v1: assert triggered
 python task7_v1/predict.py --input /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task7v1emb.npy
 cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task7_v1 && apptainer build --arch amd64 --fakeroot /Users/zcr545/Desktop/Projects/containers/task7_v1.sif Apptainer.def
 
+task7_v2: 2D 
+python task7_v2/predict.py --input /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task7v2emb.npy
+cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task7_v2 && apptainer build --arch amd64 --fakeroot /Users/zcr545/Desktop/Projects/containers/task7_v2.sif Apptainer.def
+
 upload project instead of file

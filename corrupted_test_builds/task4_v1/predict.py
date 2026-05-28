@@ -14,7 +14,7 @@ def parse_args():
         description="FOMO26 Task 4 Trigeminal Multiclass Segmentation"
     )
     parser.add_argument(
-        "--t2w", type=str, required=True, help="Path to T2-weighted image"
+        "--t2", type=str, required=True, help="Path to T2-weighted image"
     )
     parser.add_argument(
         "--output", type=str, required=True, help="Path to save segmentation NIfTI"

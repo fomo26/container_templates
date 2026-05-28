@@ -2,14 +2,21 @@
 """
 FOMO26 Challenge - Task 3: Brain Age Prediction (Regression)
 """
+
 import argparse
 from pathlib import Path
 
+
 def parse_args():
     parser = argparse.ArgumentParser(description="FOMO26 Task 3 Brain Age Prediction")
-    parser.add_argument("--t1", type=str, required=True, help="Path to T1-weighted image")
-    parser.add_argument("--output", type=str, required=True, help="Path to save output .txt")
+    parser.add_argument(
+        "--t1", type=str, required=True, help="Path to T1-weighted image"
+    )
+    parser.add_argument(
+        "--output", type=str, required=True, help="Path to save output .txt"
+    )
     return parser.parse_args()
+
 
 def predict_age(args):
     """
@@ -38,6 +45,7 @@ def predict_age(args):
     predicted_age = 45.0
     return predicted_age
 
+
 def main():
     args = parse_args()
 
@@ -50,6 +58,7 @@ def main():
         f.write(f"{predicted_age:.2f}\n")
 
     return 0
+
 
 if __name__ == "__main__":
     exit(main())

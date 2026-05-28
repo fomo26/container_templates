@@ -2,16 +2,25 @@
 """
 FOMO26 Challenge - Task 4: Trigeminal Neuralgia Multiclass Segmentation
 """
+
 import argparse
 import nibabel as nib
 import numpy as np
 from pathlib import Path
 
+
 def parse_args():
-    parser = argparse.ArgumentParser(description="FOMO26 Task 4 Trigeminal Multiclass Segmentation")
-    parser.add_argument("--t2w", type=str, required=True, help="Path to T2-weighted image")
-    parser.add_argument("--output", type=str, required=True, help="Path to save segmentation NIfTI")
+    parser = argparse.ArgumentParser(
+        description="FOMO26 Task 4 Trigeminal Multiclass Segmentation"
+    )
+    parser.add_argument(
+        "--t2", type=str, required=True, help="Path to T2-weighted image"
+    )
+    parser.add_argument(
+        "--output", type=str, required=True, help="Path to save segmentation NIfTI"
+    )
     return parser.parse_args()
+
 
 def predict_segmentation(args):
     """
@@ -30,7 +39,7 @@ def predict_segmentation(args):
     #########################################################################
     #
     # Available image paths:
-    #   - args.t2w: T2-weighted image path
+    #   - args.t2: T2-weighted image path
     #
     # Output convention:
     #   0 = background
@@ -41,6 +50,7 @@ def predict_segmentation(args):
 
     segmentation_mask = np.zeros(shape, dtype=np.int16)
     return segmentation_mask, reference_img
+
 
 def main():
     args = parse_args()
@@ -57,6 +67,7 @@ def main():
     nib.save(output_img, args.output)
 
     return 0
+
 
 if __name__ == "__main__":
     exit(main())

@@ -2,27 +2,29 @@
 """
 FOMO26 Challenge - Task 6: Linear Probing on Frozen Pretrained Embeddings
 """
+
 import argparse
 import numpy as np
 from pathlib import Path
 
-# Embedding shape (N, M). N = number of tokens/samples, M = embedding dim.
-# Replace with the shape produced by your frozen encoder.
-N_TOKENS = 1
 EMBEDDING_DIM = 768
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="FOMO26 Task 6 Linear Probing")
     parser.add_argument("--input", type=str, required=True, help="Path to input NIfTI")
-    parser.add_argument("--output", type=str, required=True, help="Path to save embeddings .npy")
+    parser.add_argument(
+        "--output", type=str, required=True, help="Path to save embeddings .npy"
+    )
     return parser.parse_args()
+
 
 def predict(args):
     """
     Compute frozen pretrained embeddings for the input volume.
 
     Returns:
-        np.ndarray: (N, M) float32 embedding matrix
+        np.ndarray: (M) float32 embedding matrix
     """
 
     #########################################################################
@@ -35,12 +37,13 @@ def predict(args):
     # Example steps you might implement:
     #   1. Load the volume
     #   2. Preprocess as expected by your frozen encoder
-    #   3. Run the frozen encoder to get an (N, M) embedding matrix
+    #   3. Run the frozen encoder to get an (M) embedding matrix
     #
     #########################################################################
 
-    embeddings = np.zeros((N_TOKENS, EMBEDDING_DIM), dtype=np.float32)
+    embeddings = np.zeros(EMBEDDING_DIM, dtype=np.float32)
     return embeddings
+
 
 def main():
     args = parse_args()
@@ -52,6 +55,7 @@ def main():
     np.save(output_path, embeddings)
 
     return 0
+
 
 if __name__ == "__main__":
     exit(main())

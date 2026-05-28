@@ -12,7 +12,7 @@ def parse_args():
     # Input paths for each modality
     parser.add_argument("--flair", type=str, help="Path to T2 FLAIR image")
     parser.add_argument("--adc", type=str, help="Path to ADC image")
-    parser.add_argument("--dwi_b1000", type=str, help="Path to DWI b1000 image")
+    parser.add_argument("--dwi", type=str, help="Path to DWI b1000 image")
     parser.add_argument("--t2s", type=str, help="Path to T2* image (optional)")
     parser.add_argument("--swi", type=str, help="Path to SWI image (optional)")
 

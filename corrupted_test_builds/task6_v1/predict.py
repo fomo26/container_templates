@@ -7,9 +7,8 @@ import argparse
 import numpy as np
 from pathlib import Path
 
-# Embedding shape (N, M). N = number of tokens/samples, M = embedding dim.
+# Embedding shape ( M). M = embedding dim.
 # Replace with the shape produced by your frozen encoder.
-N_TOKENS = 1
 EMBEDDING_DIM = 768
 
 
@@ -44,9 +43,9 @@ def predict(args):
     #
     #########################################################################
 
-    embeddings = np.zeros((N_TOKENS, EMBEDDING_DIM), dtype=np.float32)
-    embeddings[0, 10:20] = np.inf
-    embeddings[0, 100:124] = np.nan
+    embeddings = np.zeros(EMBEDDING_DIM, dtype=np.float32)
+    embeddings[10:20] = np.inf
+    embeddings[100:124] = np.nan
 
     return embeddings
 

@@ -12,7 +12,7 @@ def parse_args():
         description="FOMO26 Task 5 Polymicrogyria Classification"
     )
     parser.add_argument(
-        "--t1w", type=str, required=True, help="Path to T1-weighted image"
+        "--t1", type=str, required=True, help="Path to T1-weighted image"
     )
     parser.add_argument(
         "--output", type=str, required=True, help="Path to save output .txt"

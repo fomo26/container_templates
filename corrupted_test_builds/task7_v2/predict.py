@@ -24,7 +24,7 @@ def predict(args):
     Compute frozen pretrained embeddings for the input volume.
 
     Returns:
-        np.ndarray: (M) float32 embedding matrix
+        np.ndarray: (N, M) float32 embedding matrix
     """
 
     #########################################################################
@@ -37,11 +37,11 @@ def predict(args):
     # Example steps you might implement:
     #   1. Load the volume
     #   2. Preprocess as expected by your frozen encoder
-    #   3. Run the frozen encoder to get an (M) embedding matrix
+    #   3. Run the frozen encoder to get an (N, M) embedding matrix
     #
     #########################################################################
 
-    embeddings = np.zeros(EMBEDDING_DIM, dtype=np.float32)
+    embeddings = np.zeros((3, EMBEDDING_DIM), dtype=np.float32)
     return embeddings
 
 

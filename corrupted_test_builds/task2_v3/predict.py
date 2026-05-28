@@ -16,7 +16,7 @@ def parse_args():
 
     # Input paths for each modality
     parser.add_argument("--flair", type=str, help="Path to T2 FLAIR image")
-    parser.add_argument("--dwi_b1000", type=str, help="Path to DWI b1000 image")
+    parser.add_argument("--dwi", type=str, help="Path to DWI b1000 image")
     parser.add_argument("--t2s", type=str, help="Path to T2* image (optional)")
     parser.add_argument("--swi", type=str, help="Path to SWI image (optional)")
 
@@ -40,7 +40,7 @@ def predict_segmentation(args):
 
     # Load a reference image to get shape and metadata
     reference_img = None
-    for modality in ["flair", "dwi_b1000", "t2s", "swi"]:
+    for modality in ["flair", "dwi", "t2s", "swi"]:
         path = getattr(args, modality)
         if path and Path(path).exists():
             reference_img = nib.load(path)
