@@ -19,13 +19,6 @@ Once you have installed it, verify your Apptainer installation with:
 ```bash
 apptainer --version
 ```
-2. Install python requirements
-
-```bash
-# in an environment of your choice
-pip install -r requirements.txt
-```
-Make sure you have Python 3.11+ and pip installed.
 
 ## How To Run Validation
 
