@@ -48,6 +48,6 @@ From: pytorch/pytorch:2.11.0-cuda12.6-cudnn9-runtime
             classification.sif \
             --flair /input/flair.nii.gz \
             --adc /input/adc.nii.gz \
-            --dwi_b1000 /input/dwi.nii.gz \
+            --dwi /input/dwi.nii.gz \
             --t2s /input/t2s.nii.gz \
             --output /output/sub_id.txt`

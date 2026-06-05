@@ -23,11 +23,11 @@ python task3_v1/predict.py --t1 /Users/zcr545/Desktop/Projects/repos/container-v
 cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task3_v1 && apptainer build --arch amd64 --fakeroot /Users/zcr545/Desktop/Projects/containers/task3_v1.sif Apptainer.def
 
 task4_v1: unexpected labels. Should be 0,1,2 but is 0,1,2,3,4
-python task4_v1/predict.py --t2w /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task4seg.nii.gz
+python task4_v1/predict.py --t2 /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task4seg.nii.gz
 cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task4_v1 && apptainer build --arch amd64 --fakeroot /Users/zcr545/Desktop/Projects/containers/task4_v1.sif Apptainer.def
 
 task5_v1: multiple values
-python task5_v1/predict.py --t1w /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task5cls.txt
+python task5_v1/predict.py --t1 /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task5cls.txt
 cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task5_v1 && apptainer build --arch amd64 --fakeroot /Users/zcr545/Desktop/Projects/containers/task5_v1.sif Apptainer.def
 
 task6_v1: inf/nan in embedding

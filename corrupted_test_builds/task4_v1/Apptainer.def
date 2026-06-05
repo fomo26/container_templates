@@ -41,5 +41,5 @@ From: python:3.11-slim
             --bind /path/to/output:/output \
             --nv \
             trigeminal.sif \
-            --t2w /input/t2w.nii.gz \
+            --t2 /input/t2w.nii.gz \
             --output /output/segmentation.nii.gz`

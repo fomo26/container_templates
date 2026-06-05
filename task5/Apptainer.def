@@ -44,5 +44,5 @@ From: python:3.11-slim
             --bind /path/to/output:/output \
             --nv \
             polymicrogyria.sif \
-            --t1w /input/t1.nii.gz \
+            --t1 /input/t1.nii.gz \
             --output /output/probability.txt`

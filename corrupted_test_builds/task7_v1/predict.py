@@ -37,7 +37,7 @@ def predict(args):
     # Example steps you might implement:
     #   1. Load the volume
     #   2. Preprocess as expected by your frozen encoder
-    #   3. Run the frozen encoder to get an (N, M) embedding matrix
+    #   3. Run the frozen encoder to get an M embedding vector
     #
     #########################################################################
 

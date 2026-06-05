@@ -28,7 +28,7 @@ From: python:3.11-slim
 
 %help
     This container runs the FOMO26 linear probing task.
-    It produces an (N, M) float embedding matrix saved as a .npy file.
+    It produces an M float embedding vector saved as a .npy file.
 
     Build this container with:
 
