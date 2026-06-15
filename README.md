@@ -12,7 +12,7 @@ You need to install Apptainer (formerly Singularity) to build and run your conta
 - [Install in MacOS](https://apptainer.org/docs/admin/main/installation.html#mac)
 - [Install in Windows](https://apptainer.org/docs/admin/main/installation.html#windows)
 
-If using MacOS and Windows please follow this guide from _within_ your virtual environment. On Mac that is
+If using MacOS and Windows please follow this guide from _within_ your virtual environment.
 
 Once you have installed it, verify your Apptainer installation with:
 
@@ -20,6 +20,14 @@ Once you have installed it, verify your Apptainer installation with:
 apptainer --version
 ```
 
+## Build image
+
+```bash
+apptainer build --fakeroot /path/to/save/your/container.sif path/to/Apptainer.def --arch amd64
+```
+
+
 ## How To Run Validation
+
 
 Coming soon
