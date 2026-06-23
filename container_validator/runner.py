@@ -25,8 +25,10 @@ class ApptainerRunner:
         try:
             proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
             return RunResult(proc.returncode, proc.stdout, proc.stderr)
+        
         except subprocess.TimeoutExpired:
             return RunResult(-1, "", f"timed out after {timeout}s", timed_out=True)
+        
         except FileNotFoundError as exc:
             return RunResult(127, "", str(exc))
 
@@ -38,21 +40,29 @@ class ApptainerRunner:
         output_dir: Path,
         tmp_dir: Path,
     ) -> RunResult:
+        
         cmd = [self.executable, "instance", "start"]
         if self.gpu:
             cmd += ["--nvccli"]
         cmd += [
-            "--bind", f"{input_dir}:/input:ro",
-            "--bind", f"{output_dir}:/output:rw",
-            "--bind", f"{tmp_dir}:/tmp:rw",
+            "--bind",
+            f"{input_dir}:/input:ro",
+            "--bind",
+            f"{output_dir}:/output:rw",
+            "--bind",
+            f"{tmp_dir}:/tmp:rw",
             str(sif_path),
             instance_name,
         ]
         return self._run(cmd, timeout=120)
 
     def stop_instance(self, instance_name: str) -> RunResult:
-        return self._run([self.executable, "instance", "stop", instance_name], timeout=60)
+        return self._run(
+            [self.executable, "instance", "stop", instance_name], timeout=60
+        )
 
-    def exec_instance(self, instance_name: str, cmd: list[str], timeout: int = 900) -> RunResult:
+    def exec_instance(
+        self, instance_name: str, cmd: list[str], timeout: int = 900
+    ) -> RunResult:
         full_cmd = [self.executable, "exec", f"instance://{instance_name}"] + cmd
         return self._run(full_cmd, timeout=timeout)

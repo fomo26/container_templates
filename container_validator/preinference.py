@@ -18,13 +18,11 @@ def check_container_file_exists(sif_path: Path) -> TestResult:
 def check_container_file_is_readable(sif_path: Path) -> TestResult:
     if not sif_path.is_file():
         return TestResult(
-            "container_file_is_readable", False,
-            f"{sif_path} is not a regular file",
+            "container_file_is_readable", False, f"{sif_path} is not a regular file"
         )
     if not os.access(sif_path, os.R_OK):
         return TestResult(
-            "container_file_is_readable", False,
-            f"{sif_path} is not readable",
+            "container_file_is_readable", False, f"{sif_path} is not readable"
         )
     return TestResult("container_file_is_readable", True, "Readable regular file")
 
@@ -34,15 +32,16 @@ def check_container_has_valid_extension(sif_path: Path) -> TestResult:
     return TestResult(
         "container_has_valid_extension",
         ok,
-        ".sif extension OK" if ok else f"Expected .sif extension, got {sif_path.suffix!r}",
+        ".sif extension OK"
+        if ok
+        else f"Expected .sif extension, got {sif_path.suffix!r}",
     )
 
 
 def check_required_inputs_are_mapped(task: TaskDef, subjects: list[dict]) -> TestResult:
     if not subjects:
         return TestResult(
-            "required_inputs_are_mapped", False,
-            "No subjects found in manifest",
+            "required_inputs_are_mapped", False, "No subjects found in manifest"
         )
 
     missing: list[str] = []
@@ -61,6 +60,7 @@ def check_required_inputs_are_mapped(task: TaskDef, subjects: list[dict]) -> Tes
     if missing:
         return TestResult("required_inputs_are_mapped", False, "; ".join(missing))
     return TestResult(
-        "required_inputs_are_mapped", True,
+        "required_inputs_are_mapped",
+        True,
         f"All {len(subjects)} subject(s) have required inputs",
     )

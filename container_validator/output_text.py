@@ -10,7 +10,9 @@ def check_output_is_plain_text(output_path: Path, subject_id: str) -> TestResult
         output_path.read_bytes().decode("utf-8")
         return TestResult("output_is_plain_text", True, "Valid UTF-8", subject_id)
     except UnicodeDecodeError as exc:
-        return TestResult("output_is_plain_text", False, f"Not valid UTF-8: {exc}", subject_id)
+        return TestResult(
+            "output_is_plain_text", False, f"Not valid UTF-8: {exc}", subject_id
+        )
 
 
 def check_output_is_single_float(output_path: Path, subject_id: str) -> TestResult:
@@ -18,16 +20,20 @@ def check_output_is_single_float(output_path: Path, subject_id: str) -> TestResu
     tokens = content.split()
     if len(tokens) != 1:
         return TestResult(
-            "output_is_single_float", False,
+            "output_is_single_float",
+            False,
             f"Expected exactly 1 token, got {len(tokens)}: {content[:100]!r}",
             subject_id,
         )
     try:
         float(tokens[0])
-        return TestResult("output_is_single_float", True, f"Value: {tokens[0]}", subject_id)
+        return TestResult(
+            "output_is_single_float", True, f"Value: {tokens[0]}", subject_id
+        )
     except ValueError:
         return TestResult(
-            "output_is_single_float", False,
+            "output_is_single_float",
+            False,
             f"{tokens[0]!r} is not a valid float",
             subject_id,
         )
@@ -55,7 +61,8 @@ def check_output_probability_in_range(
     return TestResult(
         "output_probability_in_range",
         ok,
-        f"Value {value} in [{low}, {high}]" if ok
+        f"Value {value} in [{low}, {high}]"
+        if ok
         else f"Value {value} is outside the valid range [{low}, {high}]",
         subject_id,
     )

@@ -13,6 +13,7 @@ Usage:
 
 See data/manifest.yaml for how to configure your local test subjects.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -53,6 +54,7 @@ def _section(title: str) -> None:
 
 # ─── Manifest loading ──────────────────────────────────────────────────────
 
+
 def _load_subjects(manifest_path: Path, task_id: str) -> list[dict]:
     try:
         import yaml
@@ -62,7 +64,7 @@ def _load_subjects(manifest_path: Path, task_id: str) -> list[dict]:
 
     if not manifest_path.exists():
         print(f"{FAIL_TAG} Manifest not found: {manifest_path}")
-        print(f"       Edit data/manifest.yaml with your local test data.")
+        print("       Edit data/manifest.yaml with your local test data.")
         sys.exit(1)
 
     with open(manifest_path) as fh:
@@ -70,7 +72,9 @@ def _load_subjects(manifest_path: Path, task_id: str) -> list[dict]:
 
     if task_id not in raw:
         available = list(raw.keys())
-        print(f"{FAIL_TAG} Task {task_id!r} not in manifest. Available: {available or '(none)'}")
+        print(
+            f"{FAIL_TAG} Task {task_id!r} not in manifest. Available: {available or '(none)'}"
+        )
         print(f"       Add {task_id!r} subjects to data/manifest.yaml.")
         sys.exit(1)
 
@@ -92,6 +96,7 @@ def _load_subjects(manifest_path: Path, task_id: str) -> list[dict]:
 
 # ─── Predict argument builder ──────────────────────────────────────────────
 
+
 def _output_ext(filename: str) -> str:
     return ".nii.gz" if filename.lower().endswith(".nii.gz") else Path(filename).suffix
 
@@ -104,7 +109,9 @@ def _build_predict_args(task, subject: dict, out_filename: str) -> list[str]:
         if isinstance(spec, InputSpec):
             key = spec.key
             if key not in subject["inputs"]:
-                raise ValueError(f"Subject {subject['subject_id']!r} missing required input {key!r}")
+                raise ValueError(
+                    f"Subject {subject['subject_id']!r} missing required input {key!r}"
+                )
             args += [spec.arg, f"/input/{subject['inputs'][key].name}"]
         elif isinstance(spec, RequiredOneOf):
             chosen = next((k for k in spec.options if k in subject["inputs"]), None)
@@ -123,6 +130,7 @@ def _build_predict_args(task, subject: dict, out_filename: str) -> list[str]:
 
 # ─── Directory helpers ──────────────────────────────────────────────────────
 
+
 def _clear_dir(path: Path) -> None:
     for item in path.iterdir():
         if item.is_file() or item.is_symlink():
@@ -132,6 +140,7 @@ def _clear_dir(path: Path) -> None:
 
 
 # ─── Main pipeline ──────────────────────────────────────────────────────────
+
 
 def run_validation(
     task_id: str,
@@ -197,18 +206,20 @@ def run_validation(
     ext = _output_ext(task.output.filename)
 
     with (
-        tempfile.TemporaryDirectory(prefix="fomo_in_")  as td_in,
+        tempfile.TemporaryDirectory(prefix="fomo_in_") as td_in,
         tempfile.TemporaryDirectory(prefix="fomo_out_") as td_out,
         tempfile.TemporaryDirectory(prefix="fomo_tmp_") as td_tmp,
     ):
-        input_dir  = Path(td_in)
+        input_dir = Path(td_in)
         output_dir = Path(td_out)
-        tmp_dir    = Path(td_tmp)
+        tmp_dir = Path(td_tmp)
 
         # Start Apptainer instance
         _section("[Phase 2] Container instance checks")
         print(f"  {INFO_TAG} Starting instance {instance_name!r} ...")
-        start = runner.start_instance(sif_path, instance_name, input_dir, output_dir, tmp_dir)
+        start = runner.start_instance(
+            sif_path, instance_name, input_dir, output_dir, tmp_dir
+        )
         if not start.succeeded:
             detail = start.stderr.strip() or f"rc={start.returncode}"
             print(f"  {FAIL_TAG} container_instance_start — {detail}")
@@ -219,8 +230,18 @@ def run_validation(
         try:
             # Phase 2: instance-level tests
             phase2 = [
-                (container_tests.check_container_can_be_executed(runner, instance_name), True),
-                (container_tests.check_container_can_access_gpu(runner, instance_name), gpu),
+                (
+                    container_tests.check_container_can_be_executed(
+                        runner, instance_name
+                    ),
+                    True,
+                ),
+                (
+                    container_tests.check_container_can_access_gpu(
+                        runner, instance_name
+                    ),
+                    gpu,
+                ),
             ]
             for r, run_check in phase2:
                 if not run_check:
@@ -252,7 +273,8 @@ def run_validation(
                         shutil.copy2(src, dst)
                     except FileNotFoundError:
                         r = TestResult(
-                            "prediction_runs_successfully", False,
+                            "prediction_runs_successfully",
+                            False,
                             f"Input file not found: {src}",
                             sid,
                         )
@@ -273,7 +295,8 @@ def run_validation(
                     predict_args = _build_predict_args(task, subject, out_filename)
                 except ValueError as exc:
                     r = TestResult(
-                        "prediction_runs_successfully", False,
+                        "prediction_runs_successfully",
+                        False,
                         f"Could not build arguments: {exc}",
                         sid,
                     )
@@ -292,15 +315,17 @@ def run_validation(
                     pred_ok, pred_msg = False, f"predict.py timed out after {timeout}s"
                 elif run.returncode != 0:
                     snippet = run.stderr.strip()[:500]
-                    pred_ok  = False
+                    pred_ok = False
                     pred_msg = f"predict.py exited with rc={run.returncode}\n      stderr: {snippet}"
                 else:
-                    pred_ok  = True
+                    pred_ok = True
                     pred_msg = "rc=0"
                     if run.stdout.strip():
                         pred_msg += f" — stdout: {run.stdout.strip()[:200]}"
 
-                r_pred = TestResult("prediction_runs_successfully", pred_ok, pred_msg, sid)
+                r_pred = TestResult(
+                    "prediction_runs_successfully", pred_ok, pred_msg, sid
+                )
                 all_results.append(r_pred)
                 _pr(r_pred, indent=2)
                 if not pred_ok:
@@ -311,7 +336,8 @@ def run_validation(
                 r_exists = TestResult(
                     "output_file_exists",
                     host_output.exists(),
-                    str(host_output) if host_output.exists()
+                    str(host_output)
+                    if host_output.exists()
                     else f"predict.py produced no output at {host_output}",
                     sid,
                 )
@@ -337,8 +363,14 @@ def run_validation(
 
                 # Format-specific checks
                 subject_ok = _validate_output_format(
-                    task, subject, sid, host_output, all_results,
-                    output_text, output_nifti, output_numpy,
+                    task,
+                    subject,
+                    sid,
+                    host_output,
+                    all_results,
+                    output_text,
+                    output_nifti,
+                    output_numpy,
                 )
                 if not subject_ok:
                     overall_pass = False
@@ -365,21 +397,31 @@ def run_validation(
 
     # ── Summary ────────────────────────────────────────────────────────────
     print(f"\n{_B}{'=' * 64}{_X}")
-    n_pass  = sum(1 for r in all_results if r.passed)
+    n_pass = sum(1 for r in all_results if r.passed)
     n_total = len(all_results)
     if overall_pass:
-        print(f"{_G}{_B}  ALL {n_total} TESTS PASSED — container is ready to submit!{_X}")
+        print(
+            f"{_G}{_B}  ALL {n_total} TESTS PASSED — container is ready to submit!{_X}"
+        )
     else:
         n_fail = n_total - n_pass
-        print(f"{_R}{_B}  {n_fail}/{n_total} TESTS FAILED — fix the issues above before submitting.{_X}")
+        print(
+            f"{_R}{_B}  {n_fail}/{n_total} TESTS FAILED — fix the issues above before submitting.{_X}"
+        )
     print(f"{_B}{'=' * 64}{_X}\n")
 
     return overall_pass
 
 
 def _validate_output_format(
-    task, subject, sid, host_output, all_results,
-    output_text, output_nifti, output_numpy,
+    task,
+    subject,
+    sid,
+    host_output,
+    all_results,
+    output_text,
+    output_nifti,
+    output_numpy,
 ) -> bool:
     fmt = task.output.format
 
@@ -397,7 +439,9 @@ def _validate_output_format(
 
         if task.output.value_range is not None:
             low, high = task.output.value_range
-            r = output_text.check_output_probability_in_range(host_output, sid, low, high)
+            r = output_text.check_output_probability_in_range(
+                host_output, sid, low, high
+            )
             all_results.append(r)
             _pr(r, indent=2)
             if not r.passed:
@@ -422,14 +466,18 @@ def _validate_output_format(
                 return False
 
         if task.output.same_shape_as_any_input:
-            r = output_nifti.check_output_shape_matches_any_input(img, sid, subject["inputs"])
+            r = output_nifti.check_output_shape_matches_any_input(
+                img, sid, subject["inputs"]
+            )
             all_results.append(r)
             _pr(r, indent=2)
             if not r.passed:
                 return False
 
         if task.output.max_label is not None:
-            r = output_nifti.check_output_labels_in_range(img, sid, task.output.max_label)
+            r = output_nifti.check_output_labels_in_range(
+                img, sid, task.output.max_label
+            )
             all_results.append(r)
             _pr(r, indent=2)
             if not r.passed:
@@ -458,6 +506,7 @@ def _validate_output_format(
 
 # ─── CLI ──────────────────────────────────────────────────────────────────
 
+
 def main() -> None:
     from tasks import TASKS
 
@@ -478,31 +527,45 @@ exit codes:
 """,
     )
     parser.add_argument(
-        "--task", choices=sorted(TASKS), metavar="TASK",
+        "--task",
+        choices=sorted(TASKS),
+        metavar="TASK",
         help=f"Task to validate. Choices: {', '.join(sorted(TASKS))}",
     )
     parser.add_argument(
-        "--sif", type=Path, metavar="PATH",
+        "--sif",
+        type=Path,
+        metavar="PATH",
         help="Path to the Singularity/Apptainer .sif container file",
     )
     parser.add_argument(
-        "--no-gpu", action="store_true",
+        "--no-gpu",
+        action="store_true",
         help="Skip GPU checks (use when testing on a machine without a GPU)",
     )
     parser.add_argument(
-        "--manifest", type=Path, default=None, metavar="PATH",
+        "--manifest",
+        type=Path,
+        default=None,
+        metavar="PATH",
         help="Path to data manifest YAML (default: data/manifest.yaml next to this script)",
     )
     parser.add_argument(
-        "--apptainer", default="apptainer", metavar="EXEC",
+        "--apptainer",
+        default="apptainer",
+        metavar="EXEC",
         help="Apptainer executable name or full path (default: apptainer)",
     )
     parser.add_argument(
-        "--timeout", type=int, default=900, metavar="SECONDS",
+        "--timeout",
+        type=int,
+        default=900,
+        metavar="SECONDS",
         help="Per-subject prediction timeout in seconds (default: 900)",
     )
     parser.add_argument(
-        "--list-tasks", action="store_true",
+        "--list-tasks",
+        action="store_true",
         help="List all supported tasks and exit",
     )
     args = parser.parse_args()

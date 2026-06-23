@@ -19,7 +19,7 @@ class RequiredOneOf:
 class OutputSpec:
     arg: str
     filename: str
-    format: str                                  # "txt" | "nifti" | "numpy"
+    format: str  # "txt" | "nifti" | "numpy"
     value_range: tuple[float, float] | None = None
     max_label: int | None = None
     same_shape_as_any_input: bool = False
@@ -50,8 +50,8 @@ TASKS: dict[str, TaskDef] = {
         display_name="Task 1 — Stroke Outcome Classification (Probability)",
         inputs=(
             _nii("flair", "--flair"),
-            _nii("dwi",   "--dwi"),
-            _nii("adc",   "--adc"),
+            _nii("dwi", "--dwi"),
+            _nii("adc", "--adc"),
             _T2S_OR_SWI,
         ),
         output=OutputSpec("--output", "output.txt", "txt", value_range=(0.0, 1.0)),
@@ -61,47 +61,45 @@ TASKS: dict[str, TaskDef] = {
         display_name="Task 2 — Binary Lesion Segmentation",
         inputs=(
             _nii("flair", "--flair"),
-            _nii("dwi",   "--dwi"),
+            _nii("dwi", "--dwi"),
             _T2S_OR_SWI,
         ),
         output=OutputSpec(
-            "--output", "output.nii.gz", "nifti",
-            max_label=1, same_shape_as_any_input=True,
+            "--output",
+            "output.nii.gz",
+            "nifti",
+            max_label=1,
+            same_shape_as_any_input=True,
         ),
         suite="binary_segmentation_nifti",
     ),
     "task3": TaskDef(
         display_name="Task 3 — Lesion Volume Regression (Scalar)",
-        inputs=(
-            _nii("t1", "--t1"),
-        ),
+        inputs=(_nii("t1", "--t1"),),
         output=OutputSpec("--output", "output.txt", "txt"),
         suite="regression_scalar",
     ),
     "task4": TaskDef(
         display_name="Task 4 — Multiclass Tissue Segmentation",
-        inputs=(
-            _nii("t2", "--t2"),
-        ),
+        inputs=(_nii("t2", "--t2"),),
         output=OutputSpec(
-            "--output", "output.nii.gz", "nifti",
-            max_label=2, same_shape_as_any_input=True,
+            "--output",
+            "output.nii.gz",
+            "nifti",
+            max_label=2,
+            same_shape_as_any_input=True,
         ),
         suite="multiclass_segmentation_nifti",
     ),
     "task5": TaskDef(
         display_name="Task 5 — Hemorrhagic Transformation Classification (Probability)",
-        inputs=(
-            _nii("t1", "--t1"),
-        ),
+        inputs=(_nii("t1", "--t1"),),
         output=OutputSpec("--output", "output.txt", "txt", value_range=(0.0, 1.0)),
         suite="classification_scalar_probability",
     ),
     "task6": TaskDef(
         display_name="Task 6 — Linear Probing Embeddings",
-        inputs=(
-            _nii("input", "--input"),
-        ),
+        inputs=(_nii("input", "--input"),),
         output=OutputSpec("--output", "output.npy", "numpy"),
         suite="linear_probing_embeddings",
     ),
