@@ -97,14 +97,8 @@ TASKS: dict[str, TaskDef] = {
         output=OutputSpec("--output", "output.txt", "txt", value_range=(0.0, 1.0)),
         suite="classification_scalar_probability",
     ),
-    "task6": TaskDef(
-        display_name="Task 6 — Linear Probing Embeddings",
-        inputs=(_nii("input", "--input"),),
-        output=OutputSpec("--output", "output.npy", "numpy"),
-        suite="linear_probing_embeddings",
-    ),
-    "task7": TaskDef(
-        display_name="Task 7 — Fairness",
+    "task6_and_7": TaskDef(
+        display_name="Tasks 6 and 7 — Fairness & Linear Probing Embeddings",
         inputs=(_nii("input", "--input"),),
         output=OutputSpec("--output", "output.npy", "numpy"),
         suite="linear_probing_embeddings",
