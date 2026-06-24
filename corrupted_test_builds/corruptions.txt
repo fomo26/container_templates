@@ -18,12 +18,12 @@ python task2_v2/predict.py --flair /Users/zcr545/Desktop/Projects/repos/containe
 cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task2_v2 && apptainer build --arch amd64 --fakeroot /Users/zcr545/Desktop/Projects/containers/task2_v2.sif Apptainer.def
 cd /Users/zcr545/Desktop/Projects/repos/container-validator && python3 container_validator/validate.py --task task2 --sif /Users/zcr545/Desktop/Projects/containers/task2_v2.sif --no-gpu
 
-task2_v3: incorrect build platform (should have used --arch amd64) (C)
+task2_v3: incorrect build platform (should have used --arch amd64) (X - doesn't see build platform)
 python task2_v3/predict.py --flair /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task2v3seg.nii.gz
 cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task2_v3 && apptainer build --fakeroot /Users/zcr545/Desktop/Projects/containers/task2_v3.sif Apptainer.def 
 cd /Users/zcr545/Desktop/Projects/repos/container-validator && python3 container_validator/validate.py --task task2 --sif /Users/zcr545/Desktop/Projects/containers/task2_v3.sif --no-gpu
 
-task2_v4: SHOULD WORK (C)
+task2_v4: SHOULD WORK (X - I think it works but can't test )
 python task2_v4/predict.py --flair /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task2v4seg.nii.gz
 cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task2_v4 && apptainer build --arch amd64 --fakeroot /Users/zcr545/Desktop/Projects/containers/task2_v4.sif Apptainer.def
 python3 container_validator/validate.py --task task2 --sif /Users/zcr545/Desktop/Projects/containers/task2_v4.sif --no-gpu
@@ -33,7 +33,7 @@ python task3_v1/predict.py --t1 /Users/zcr545/Desktop/Projects/repos/container-v
 cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task3_v1 && apptainer build --arch amd64 --fakeroot /Users/zcr545/Desktop/Projects/containers/task3_v1.sif Apptainer.def
 cd /Users/zcr545/Desktop/Projects/repos/container-validator && python3 container_validator/validate.py --task task3 --sif /Users/zcr545/Desktop/Projects/containers/task3_v1.sif --no-gpu
 
-task3_v2: SHOULD WORK
+task3_v2: SHOULD WORK (C)
 python task3_v2/predict.py --t1 /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task3reg.txt 
 cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task3_v2 && apptainer build --arch amd64 --fakeroot /Users/zcr545/Desktop/Projects/containers/task3_v2.sif Apptainer.def
 cd /Users/zcr545/Desktop/Projects/repos/container-validator && python3 container_validator/validate.py --task task3 --sif /Users/zcr545/Desktop/Projects/containers/task3_v2.sif --no-gpu
@@ -43,7 +43,7 @@ python task4_v1/predict.py --t2 /Users/zcr545/Desktop/Projects/repos/container-v
 cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task4_v1 && apptainer build --arch amd64 --fakeroot /Users/zcr545/Desktop/Projects/containers/task4_v1.sif Apptainer.def
 cd /Users/zcr545/Desktop/Projects/repos/container-validator && python3 container_validator/validate.py --task task4 --sif /Users/zcr545/Desktop/Projects/containers/task4_v1.sif --no-gpu
 
-task4_v2: unexpected labels. Should be 0,1,2 but is 0,1,2,3,4
+task4_v2: unexpected labels. Should be 0,1,2 but is 0,1,2,3,4 (C)
 python task4_v2/predict.py --t2 /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task4seg.nii.gz
 cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task4_v2 && apptainer build --arch amd64 --fakeroot /Users/zcr545/Desktop/Projects/containers/task4_v2.sif Apptainer.def
 cd /Users/zcr545/Desktop/Projects/repos/container-validator && python3 container_validator/validate.py --task task4 --sif /Users/zcr545/Desktop/Projects/containers/task4_v2.sif --no-gpu
@@ -63,12 +63,14 @@ python task6_v2/predict.py --input /Users/zcr545/Desktop/Projects/repos/containe
 cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task6_v2 && apptainer build --arch amd64 --fakeroot /Users/zcr545/Desktop/Projects/containers/task6_v2.sif Apptainer.def
 cd /Users/zcr545/Desktop/Projects/repos/container-validator && python3 container_validator/validate.py --task task6 --sif /Users/zcr545/Desktop/Projects/containers/task6_v2.sif --no-gpu
 
-task7_v1: assert triggered 
+task7_v1: assert triggered (C)
 python task7_v1/predict.py --input /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task7v1emb.npy
 cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task7_v1 && apptainer build --arch amd64 --fakeroot /Users/zcr545/Desktop/Projects/containers/task7_v1.sif Apptainer.def
+cd /Users/zcr545/Desktop/Projects/repos/container-validator && python3 container_validator/validate.py --task task6 --sif /Users/zcr545/Desktop/Projects/containers/task7_v1.sif --no-gpu
 
-task7_v2: 2D 
+task7_v2: 2D (C)
 python task7_v2/predict.py --input /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/inputs/sub-strokecase0003_ses-0001_FLAIR.nii.gz --output /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/test_data/outputs/task7v2emb.npy
 cd /Users/zcr545/Desktop/Projects/repos/container-validator/corrupted_test_builds/task7_v2 && apptainer build --arch amd64 --fakeroot /Users/zcr545/Desktop/Projects/containers/task7_v2.sif Apptainer.def
+cd /Users/zcr545/Desktop/Projects/repos/container-validator && python3 container_validator/validate.py --task task6 --sif /Users/zcr545/Desktop/Projects/containers/task7_v2.sif --no-gpu
 
 upload project instead of file
