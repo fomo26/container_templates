@@ -103,4 +103,10 @@ TASKS: dict[str, TaskDef] = {
         output=OutputSpec("--output", "output.npy", "numpy"),
         suite="linear_probing_embeddings",
     ),
+    "task7": TaskDef(
+        display_name="Task 7 — Fairness",
+        inputs=(_nii("input", "--input"),),
+        output=OutputSpec("--output", "output.npy", "numpy"),
+        suite="linear_probing_embeddings",
+    ),
 }

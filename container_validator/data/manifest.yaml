@@ -46,3 +46,11 @@ task6:
   case_002:
     inputs:
       input: inputs/task6/case_002/t1w.nii.gz
+
+task7:
+  case_001:
+    inputs:
+      input: inputs/task6/case_001/t2w.nii.gz
+  case_002:
+    inputs:
+      input: inputs/task6/case_002/t1w.nii.gz
