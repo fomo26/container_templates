@@ -5,25 +5,27 @@ Bootstrap: docker
 From: pytorch/pytorch:2.11.0-cuda12.6-cudnn9-runtime
 
 %labels
-    Author FOMO26 Challenge - Brain Age Regression Task
+    Author FOMO26 Challenge - Classification Task
     Version v1.0.0
-    Description FOMO26 Brain Age Prediction Apptainer Image
+    Description FOMO26 Infarct Classification Apptainer Image
 
 %environment
     export PYTHONUNBUFFERED=1
     export LC_ALL=C.UTF-8
 
 %files
-    # Copy your files (model, predict.py, requirements.txt, ...) to the container
     ./predict.py /app/predict.py
     ./requirements.txt /app/requirements.txt
 
 %post
     # Create necessary directories
     mkdir -p /input /output /app
+
+    # Install Python dependencies (manylinux wheels available, no compiler needed)
     pip install --no-cache-dir -U pip --break-system-packages
     pip install --no-cache-dir -r /app/requirements.txt --break-system-packages
 
+    # Make predict.py executable
     chmod +x /app/predict.py
 
 %runscript
@@ -31,17 +33,21 @@ From: pytorch/pytorch:2.11.0-cuda12.6-cudnn9-runtime
     exec python /app/predict.py "$@"
 
 %help
-    This container runs the FOMO26 brain age prediction task.
+    This container runs the FOMO26 infarct classification task.
 
     Build this container with:
+        
+        `apptainer build --fakeroot /path/to/save/classification.sif /path/to/Apptainer.def`
 
-        `apptainer build --fakeroot /path/to/save/brain_age.sif /path/to/Apptainer.def`
-
+    
     Usage:
-
+        
         `apptainer run --bind /path/to/input:/input:ro \
             --bind /path/to/output:/output \
             --nv \
-            brain_age.sif \
-            --t1 /input/t1.nii.gz \
-            --output /output/age_prediction.txt`
+            classification.sif \
+            --flair /input/flair.nii.gz \
+            --adc /input/adc.nii.gz \
+            --dwi /input/dwi.nii.gz \
+            --t2s /input/t2s.nii.gz \
+            --output /output/sub_id.txt`
